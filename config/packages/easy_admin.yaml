@@ -1,0 +1,11 @@
+easy_admin:
+    entities:
+        Question:
+            class: App\Entity\Question
+            form:
+                fields:
+                    - name
+                    - { property: 'answers',type: 'collection', type_options: { entry_type: App\Form\AnswerType } }
+#
+        Answer:
+            class: App\Entity\Question
