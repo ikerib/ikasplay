@@ -58,3 +58,9 @@ vendor/
 ###< lexik/jwt-authentication-bundle ###
 /var/
 deploy.php
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
