@@ -11,3 +11,9 @@ require('bootstrap');
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 });
+
+$(".erantzuna").on("click", function () {
+    let balioa = $(this).data('balioa');
+
+
+});

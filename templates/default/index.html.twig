@@ -11,22 +11,22 @@
                 <p class="lead text-muted">{{ q }}</p>
                 <ol type="A">
                     {% for a in q.answers %}
-                        <li {% if a.correct == true %}class="zuzena"{% endif %}>{{ a }}</li>
+                        <li >
+                            <a href="#" class="erantzuna" data-balioa="{{ a.correct }}">{{ a }}</a>
+                        </li>
                     {% endfor %}
                 </ol>
             </div>
         </section>
         <hr>
-        <section class="text-center">
-            <ul class="list-unstyled">
-                <li><a href="#" class="btn btn-sm btn-secondary my-2">Erantzuna: A</a></li>
-                <li><a href="#" class="btn btn-sm btn-secondary my-2">Erantzuna: B</a></li>
-                <li><a href="#" class="btn btn-sm btn-secondary my-2">Erantzuna: C</a></li>
-                <li><a href="#" class="btn btn-sm btn-secondary my-2">Erantzuna: D</a></li>
-            </ul>
-        </section>
-        <section class="text-center" id="divEmaitza">
 
+        <section class="text-center" id="divEmaitza">
+            <div class="divZuzena">
+                <span style='font-size:100px;'>&#128526;</span>
+            </div>
+            <div class="divOkerra">
+                <span style='font-size:100px;'>&#128534;</span>
+            </div>
         </section>
     {% endfor %}
 
