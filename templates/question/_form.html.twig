@@ -1,3 +1,4 @@
+{% form_theme form 'question-theme.html.twig' 'jquery.collection.html.twig' %}
 {{ form_start(form) }}
 
     <ul class="list-inline">
@@ -23,17 +24,16 @@
     </div>
 
     <div class="form-group">
-        <h3>Erantzunak</h3>
+{#        <h3>Erantzunak</h3>#}
 
-        <ul class="answers list-unstyled" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">
-            {# iterate over each existing tag and render its only field: name #}
-            {% for a in form.answers %}
+{#        <ul class="answers list-unstyled" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">#}
+{#            {% for a in form.answers %}#}
 
-                <li><ul class="list-unstyled list-inline"></ul>{{ form_row(a.name) }}{{ form_row(a.correct) }} <span style="display: none">{{ form_row(a.question) }}</span></li>
-            {% endfor %}
-        </ul>
+{#                <li><ul class="list-unstyled list-inline"></ul>{{ form_row(a.name) }}{{ form_row(a.correct) }} <span style="display: none">{{ form_row(a.question) }}</span></li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
     </div>
-    <div style="display: none">
+    <div style="display: visible">
         {{ form_rest(form) }}
     </div>
 {{ form_end(form) }}

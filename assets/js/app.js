@@ -10,6 +10,7 @@ require('bootstrap');
 
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
+    $('.collectionClass').collection();
 });
 
 $(".erantzuna").on("click", function () {

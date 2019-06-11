@@ -17,10 +17,15 @@ class QuestionType extends AbstractType
             ->add('name')
             ->add('answers', CollectionType::class, [
                 'entry_type' => AnswerType::class,
+                'label' => '<h3>Erantzunak</h3>',
                 'entry_options' => ['label'=>false],
                 'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference' => false
+                'prototype' => true,
+                'by_reference' => false,
+                'attr' => [
+                    'class' => 'collectionClass',
+                ]
             ])
         ;
     }
@@ -30,5 +35,10 @@ class QuestionType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Question::class,
         ]);
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'QuestionType';
     }
 }
