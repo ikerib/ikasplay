@@ -2,25 +2,39 @@
 
 {% block title %}Question{% endblock %}
 
-{% block body %}
-    <h1>Question</h1>
+{% block bodya %}
+    <div class="row">&nbsp;</div>
+    <a class="btn btn-primary" href="{{ path('question_index') }}">Zerrendara itzuli</a>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ question.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ question.name }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <a class="btn btn-primary" href="{{ path('question_edit', {'id': question.id}) }}">Aldatu</a>
 
-    <a href="{{ path('question_index') }}">back to list</a>
+    <hr>
 
-    <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
+            <section class="jumbotron text-center">
+                <div class="container">
+                    <p class="lead text-muted">{{ question.name }}</p>
+                    <ol type="A">
+                        {% for a in question.answers %}
+                            <li >
+                                <a href="#" class="erantzuna" data-balioa="{{ a.correct }}">{{ a }}</a>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </section>
+            <hr>
+
+            <section class="text-center" id="divEmaitza">
+                <div class="divZuzena">
+                    <span style='font-size:100px;'>&#128526;</span>
+                </div>
+                <div class="divOkerra">
+                    <span style='font-size:100px;'>&#128534;</span>
+                </div>
+            </section>
+
+
+
 
     {{ include('question/_delete_form.html.twig') }}
 {% endblock %}

@@ -2,21 +2,27 @@
 
 namespace App\Controller;
 
+use App\Entity\Answer;
 use App\Entity\Question;
 use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/question")
+ * @Route("/admin/question")
  */
 class QuestionController extends AbstractController
 {
+
     /**
      * @Route("/", name="question_index", methods={"GET"})
+     * @param QuestionRepository $questionRepository
+     *
+     * @return Response
      */
     public function index(QuestionRepository $questionRepository): Response
     {
@@ -27,6 +33,9 @@ class QuestionController extends AbstractController
 
     /**
      * @Route("/new", name="question_new", methods={"GET","POST"})
+     * @param Request $request
+     *
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -50,6 +59,9 @@ class QuestionController extends AbstractController
 
     /**
      * @Route("/{id}", name="question_show", methods={"GET"})
+     * @param Question $question
+     *
+     * @return Response
      */
     public function show(Question $question): Response
     {
@@ -60,14 +72,36 @@ class QuestionController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="question_edit", methods={"GET","POST"})
+     * @param Request  $request
+     * @param Question $question
+     *
+     * @return Response
      */
     public function edit(Request $request, Question $question): Response
     {
+        $em = $this->getDoctrine()->getManager();
+        $originalAnswers = new ArrayCollection();
+
+        // Create an ArrayCollection of the current Tag objects in the database
+        foreach ($question->getAnswers() as $answer) {
+            $originalAnswers->add($answer);
+        }
+
         $form = $this->createForm(QuestionType::class, $question);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            /** @var Answer $ans */
+            foreach ($originalAnswers as $ans) {
+                if (false === $question->getAnswers()->contains($ans)) {
+//                    $ans->getQuestion()->removeAnswer($ans);
+                    $em->remove($ans);
+                }
+            }
+
+
+            $em->persist($question);
+            $em->flush();
 
             return $this->redirectToRoute('question_index', [
                 'id' => $question->getId(),
@@ -82,6 +116,10 @@ class QuestionController extends AbstractController
 
     /**
      * @Route("/{id}", name="question_delete", methods={"DELETE"})
+     * @param Request  $request
+     * @param Question $question
+     *
+     * @return Response
      */
     public function delete(Request $request, Question $question): Response
     {

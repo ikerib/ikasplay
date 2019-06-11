@@ -1,5 +1,5 @@
-
-const $ = require('jquery');
+global.$ = global.jQuery = $;
+// const $ = require('jquery');
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything
 require('bootstrap');
@@ -15,5 +15,5 @@ $(document).ready(function() {
 $(".erantzuna").on("click", function () {
     let balioa = $(this).data('balioa');
 
-
 });
+

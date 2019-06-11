@@ -1,4 +1,40 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+    <ul class="list-inline">
+        <li class="list-inline-item">
+            <button class="btn btn-primary">{{ button_label|default('Gorde') }}</button>
+        </li>
+
+        <li class="list-inline-item">
+            <a class="btn btn-primary" href="{{ path('question_index') }}">Itzuli zerrendara</a>
+        </li>
+    </ul>
+
+    <hr>
+
+    <div class="form-group">
+
+
+    </div>
+
+
+    <div class="form-group">
+        {{ form_row(form.name) }}
+    </div>
+
+    <div class="form-group">
+        <h3>Erantzunak</h3>
+
+        <ul class="answers list-unstyled" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">
+            {# iterate over each existing tag and render its only field: name #}
+            {% for a in form.answers %}
+
+                <li><ul class="list-unstyled list-inline"></ul>{{ form_row(a.name) }}{{ form_row(a.correct) }} <span style="display: none">{{ form_row(a.question) }}</span></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div style="display: none">
+        {{ form_rest(form) }}
+    </div>
 {{ form_end(form) }}
+
