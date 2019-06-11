@@ -31,7 +31,7 @@ class DefaultController extends AbstractController
         $questions = $paginator->paginate(
             $allQuestions,
             $request->query->getInt('page',1),
-            $request->query->getInt('limit',10)
+            $request->query->getInt('limit',1)
         );
 
         return $this->render('default/index.html.twig', [
