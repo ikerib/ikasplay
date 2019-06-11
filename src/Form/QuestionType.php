@@ -17,7 +17,8 @@ class QuestionType extends AbstractType
             ->add('name')
             ->add('answers', CollectionType::class, [
                 'entry_type' => AnswerType::class,
-                'label' => '<h3>Erantzunak</h3>',
+                'label' => "Erantzunak",
+                'block_name' => 'question_answers',
                 'entry_options' => ['label'=>false],
                 'allow_add' => true,
                 'allow_delete' => true,
