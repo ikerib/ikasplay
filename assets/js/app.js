@@ -14,7 +14,16 @@ $(document).ready(function() {
 });
 
 $(".erantzuna").on("click", function () {
+    $("#divOkerra").hide();
+    $("#divZuzena").hide();
     let balioa = $(this).data('balioa');
 
+    if ( balioa === 1  ) {
+        $("#divOkerra").hide();
+        $("#divZuzena").show();
+    } else {
+        $("#divOkerra").show();
+        $("#divZuzena").hide();
+    }
 });
 

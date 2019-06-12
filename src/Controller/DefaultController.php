@@ -15,7 +15,7 @@ class DefaultController extends AbstractController
 {
 
     /**
-     * @Route("/", name="default")
+     * @Route("/quizz", name="default")
      * @param Request            $request
      * @param PaginatorInterface $paginator
      *

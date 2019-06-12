@@ -8,24 +8,30 @@
     {% for q in questions %}
         <section class="jumbotron text-center">
             <div class="container">
-                <p class="lead text-muted">{{ q }}</p>
-                <ol type="A">
+                <h2>{{ q }}</h2>
+                <ol type="A" class="text-left">
                     {% for a in q.answers %}
                         <li >
-                            <a href="#" class="erantzuna" data-balioa="{{ a.correct }}">{{ a }}</a>
+                            <a href="#" class="erantzuna" data-balioa="{{ a.correct }}">{{ a.correct }}-{{ a }}</a>
                         </li>
                     {% endfor %}
                 </ol>
             </div>
         </section>
         <hr>
-
+        <div class="navigation text-center">
+            {{ knp_pagination_render(questions, null, {}, {
+                'position': 'centered',
+                'size': 'large',
+                'rounded': true,
+            }) }}
+        </div>
         <section class="text-center" id="divEmaitza">
-            <div class="divZuzena">
-                <span style='font-size:100px;'>&#128526;</span>
+            <div id="divZuzena" style="display: none">
+                <span class="emoZuzena" style='font-size:100px;'>&#128526;</span>
             </div>
-            <div class="divOkerra">
-                <span style='font-size:100px;'>&#128534;</span>
+            <div id="divOkerra" style="display: none">
+                <span class="emoOkerra" style='font-size:100px;'>&#128534;</span>
             </div>
         </section>
     {% endfor %}
