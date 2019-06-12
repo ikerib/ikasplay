@@ -14,6 +14,7 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Erantzunak</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
             <tr>
                 <td>{{ question.id }}</td>
                 <td>{{ question.name }}</td>
+                <td>{{ question.answers | length }}</td>
                 <td>
                     <a href="{{ path('question_show', {'id': question.id}) }}">show</a>
                     <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
