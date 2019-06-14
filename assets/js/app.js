@@ -35,7 +35,7 @@ $(".erantzuna").on("click", function () {
     });
 
     $.ajax({
-        url: "/quizz/" + miid,
+        url: "/result/" + miid,
         type: "GET",
         data: "result=" + zuzena,
         success: function ( data ) {

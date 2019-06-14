@@ -97,7 +97,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/quizz/{id}", name("quizz_result")
+     * @Route("/result/{id}", name("quizz_result")
      * @param Request $request
      * @param         $id
      *
