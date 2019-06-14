@@ -8,6 +8,7 @@ use App\Entity\QuizzDet;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -93,5 +94,23 @@ class DefaultController extends AbstractController
         return $this->render('default/quizz_index.html.twig', [
             'quizzes' => $quizzes,
         ]);
+    }
+
+    /**
+     * @Route("/quizz/{id}", name("quizz_result")
+     * @param Request $request
+     * @param         $id
+     *
+     * @return JsonResponse
+     */
+    public function quizzresult(Request $request, $id) {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $quizz = $em->getRepository(QuizzDet::class)->find($id);
+        $result = $request->get('result');
+        $quizz->setResult($result);
+
+        return new JsonResponse($quizz, 200);
     }
 }

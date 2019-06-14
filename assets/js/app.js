@@ -35,8 +35,8 @@ $(".erantzuna").on("click", function () {
     });
 
     $.ajax({
-        url: "/api/quizzdet/" + miid,
-        type: "PUT",
+        url: "/quizz/" + miid,
+        type: "GET",
         data: "result=" + zuzena,
         success: function ( data ) {
             console.log(data);
