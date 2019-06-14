@@ -4,7 +4,6 @@
 
 {% block main %}
 
-
     {% for q in questions %}
         <section class="jumbotron text-center">
             <div class="container">
@@ -18,14 +17,33 @@
                 </ol>
             </div>
         </section>
+
         <hr>
-        <div class="navigation text-center">
-            {{ knp_pagination_render(questions, null, {}, {
-                'position': 'centered',
-                'size': 'large',
-                'rounded': true,
-            }) }}
+
+        <div class="row">
+            <div class="col-sm">&nbsp;</div>
+            <div class="col-sm" id="divPagination" style="display: none">
+                {{ knp_pagination_render(questions, null, {}, {
+                    'position': 'right',
+                    'size': 'large',
+                    'rounded': true,
+                }) }}
+            </div>
+            <div class="col-sm">&nbsp;</div>
         </div>
+
+        <div class="row">
+            <div class="col-sm">
+
+            </div>
+            <div class="col-sm">
+
+            </div>
+            <div class="col-sm">
+
+            </div>
+        </div>
+
         <section class="text-center" id="divEmaitza">
             <div id="divZuzena" style="display: none">
                 <span class="emoZuzena" style='font-size:100px;'>&#128526;</span>

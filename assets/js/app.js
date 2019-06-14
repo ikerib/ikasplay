@@ -13,17 +13,27 @@ $(document).ready(function() {
     $('.collectionClass').collection();
 });
 
-$(".erantzuna").on("click", function () {
-    $("#divOkerra").hide();
-    $("#divZuzena").hide();
-    let balioa = $(this).data('balioa');
 
-    if ( balioa === 1  ) {
-        $("#divOkerra").hide();
-        $("#divZuzena").show();
+
+$(".erantzuna").on("click", function () {
+
+    $(".erantzuna").each(function (  ) {
+        const $bal = $(this).data("balioa");
+        if ( $bal !== 1 ) {
+            $(this).addClass("strike");
+            $(this).contents().unwrap();
+        } else {
+            $(this).addClass('zuzena_azpimarratu')
+        }
+    });
+
+    let $quizz_resp = $(this).data("balioa");
+    $("#divPagination").show();
+    if ( $quizz_resp === 1 ) {
+        $(".emoZuzena").show()
     } else {
-        $("#divOkerra").show();
-        $("#divZuzena").hide();
+        $(".emoOkerra").show()
     }
+
 });
 

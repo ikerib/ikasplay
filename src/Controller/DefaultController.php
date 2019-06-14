@@ -34,6 +34,8 @@ class DefaultController extends AbstractController
             $request->query->getInt('limit',1)
         );
 
+
+
         return $this->render('default/index.html.twig', [
             'questions' => $questions,
         ]);

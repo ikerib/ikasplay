@@ -27,10 +27,20 @@ $primary: darken(#428bca, 20%);
 //  max-width: 40rem;
 //}
 
-#divZuzena {
+.emoZuzena {
   background-color: #718C00;
 }
 
-#divOkerra {
+.emoOkerra {
   background-color: #AA3333;
+}
+
+.strike {
+  text-decoration: line-through;
+}
+
+.zuzena_azpimarratu, .zuzena_azpimarratu:hover, .zuzena_azpimarratu:active{
+  font-size: 1.5rem;
+  background-color: #336016;
+  color: #ffffff;
 }
