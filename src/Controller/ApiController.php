@@ -28,7 +28,11 @@ class ApiController extends AbstractFOSRestController
 
 
     /**
-     * @Rest\Put("/quizzdet/{id}", name="put_quizzdet", requirements={"id"="\d+"})
+     * @Rest\Put("/quizzdet/{id}", name="put_quizzdet", methods={"PUT"}, requirements={"id"="\d+"})
+     * @param Request $request
+     * @param string  $id
+     *
+     * @return JsonResponse
      */
     public function putAction(Request $request, string $id)
     {
