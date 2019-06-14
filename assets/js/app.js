@@ -17,6 +17,10 @@ $(document).ready(function() {
 
 $(".erantzuna").on("click", function () {
 
+    const miid = $(this).data("id");
+    const selbal = $(this).data("balioa");
+    let zuzena = 0;
+
     $(".erantzuna").each(function (  ) {
         const $bal = $(this).data("balioa");
         if ( $bal !== 1 ) {
@@ -25,7 +29,23 @@ $(".erantzuna").on("click", function () {
         } else {
             $(this).addClass('zuzena_azpimarratu')
         }
+        if ( selbal === $bal ) {
+            zuzena = 1;
+        }
     });
+
+    $.ajax({
+        url: "/api/quizzdet/" + miid,
+        type: "PUT",
+        data: "result=" + zuzena,
+        success: function ( data ) {
+            console.log(data);
+        },
+        error: function ( err ) {
+            console.log(err);
+        }
+    });
+
 
     let $quizz_resp = $(this).data("balioa");
     $("#divPagination").show();

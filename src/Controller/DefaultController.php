@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Question;
 use App\Entity\Quizz;
 use App\Entity\QuizzDet;
 use Doctrine\ORM\EntityManager;
@@ -42,8 +43,8 @@ class DefaultController extends AbstractController
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $allQuestions = $em->getRepository('App:Question')->findAll();
-        $allQuizz = $em->getRepository('App:Quizz')->findAll();
+        $allQuestions = $em->getRepository(Question::class)->findAll();
+        $allQuizz = $em->getRepository(Quizz::class)->findAll();
         foreach ($allQuizz as $quizz) {
             $em->remove($quizz);
         }
@@ -57,7 +58,6 @@ class DefaultController extends AbstractController
             $qd = new QuizzDet();
             $qd->setQuizz($quizz);
             $qd->setQuestion($question);
-            $qd->setResult(0);
             $em->persist($qd);
         }
         $em->flush();
@@ -81,18 +81,17 @@ class DefaultController extends AbstractController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $allQuestions = $em->getRepository('App:Question')->findAll();
+        $allQuizz = $em->getRepository(QuizzDet::class)->findAllUnanswered();
 
-        $questions = $paginator->paginate(
-            $allQuestions,
+        $quizzes = $paginator->paginate(
+            $allQuizz,
             $request->query->getInt('page',1),
             $request->query->getInt('limit',1)
         );
 
 
-
         return $this->render('default/quizz_index.html.twig', [
-            'questions' => $questions,
+            'quizzes' => $quizzes,
         ]);
     }
 }

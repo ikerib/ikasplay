@@ -4,14 +4,15 @@
 
 {% block main %}
 
-    {% for q in questions %}
+    {% for quizz in quizzes %}
+
         <section class="jumbotron text-center">
             <div class="container">
-                <h2>{{ q }}</h2>
+                <h2>{{ quizz.question.name }}</h2>
                 <ol type="A" class="text-left">
-                    {% for a in q.answers %}
+                    {% for a in quizz.question.answers %}
                         <li >
-                            <a href="#" class="erantzuna" data-balioa="{{ a.correct }}">{{ a.correct }}-{{ a }}</a>
+                            <a href="#" class="erantzuna" data-question="{{ a.question.id  }}" data-id="{{ quizz.id }}" data-balioa="{{ a.correct }}">{{ quizz.id }}/{{ a.correct }}-{{ a }}</a>
                         </li>
                     {% endfor %}
                 </ol>
@@ -23,7 +24,7 @@
         <div class="row">
             <div class="col-sm">&nbsp;</div>
             <div class="col-sm" id="divPagination" style="display: none">
-                {{ knp_pagination_render(questions, null, {}, {
+                {{ knp_pagination_render(quizzes, null, {}, {
                     'position': 'right',
                     'size': 'large',
                     'rounded': true,

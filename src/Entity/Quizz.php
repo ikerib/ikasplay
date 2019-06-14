@@ -29,7 +29,7 @@ class Quizz
     private $created;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $result;
 
@@ -46,7 +46,7 @@ class Quizz
     public function __construct()
     {
         $this->quizzDets = new ArrayCollection();
-        $this->result = 0;
+        $this->result = null;
         $this->created = new \DateTime();
     }
 

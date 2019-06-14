@@ -17,7 +17,7 @@ class QuizzDet
     private $id;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $result;
 
@@ -37,7 +37,7 @@ class QuizzDet
     private $question;
 
     public function __construct() {
-        $this->result = 0;
+        $this->result = null; // NOT ANSWERED
     }
 
 

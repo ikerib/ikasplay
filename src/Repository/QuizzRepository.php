@@ -19,6 +19,8 @@ class QuizzRepository extends ServiceEntityRepository
         parent::__construct($registry, Quizz::class);
     }
 
+
+
     // /**
     //  * @return Quizz[] Returns an array of Quizz objects
     //  */

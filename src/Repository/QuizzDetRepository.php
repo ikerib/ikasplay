@@ -19,6 +19,16 @@ class QuizzDetRepository extends ServiceEntityRepository
         parent::__construct($registry, QuizzDet::class);
     }
 
+
+    public function findAllUnanswered()
+    {
+        /* Unanswered == null */
+        return $this->createQueryBuilder('q')
+                    ->andWhere('q.result is null')
+                    ->getQuery()
+                    ->getResult();
+    }
+
     // /**
     //  * @return QuizzDet[] Returns an array of QuizzDet objects
     //  */
