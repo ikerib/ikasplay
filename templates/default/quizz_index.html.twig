@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DefaultController!{% endblock %}
+
+{% block main %}
+
+    {% for q in questions %}
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h2>{{ q }}</h2>
+                <ol type="A" class="text-left">
+                    {% for a in q.answers %}
+                        <li >
+                            <a href="#" class="erantzuna" data-balioa="{{ a.correct }}">{{ a.correct }}-{{ a }}</a>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </section>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-sm">&nbsp;</div>
+            <div class="col-sm" id="divPagination" style="display: none">
+                {{ knp_pagination_render(questions, null, {}, {
+                    'position': 'right',
+                    'size': 'large',
+                    'rounded': true,
+                }) }}
+            </div>
+            <div class="col-sm">&nbsp;</div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+
+            </div>
+            <div class="col-sm">
+
+            </div>
+            <div class="col-sm">
+
+            </div>
+        </div>
+
+        <section class="text-center" id="divEmaitza">
+            <div id="divZuzena" style="display: none">
+                <span class="emoZuzena" style='font-size:100px;'>&#128526;</span>
+            </div>
+            <div id="divOkerra" style="display: none">
+                <span class="emoOkerra" style='font-size:100px;'>&#128534;</span>
+            </div>
+        </section>
+    {% endfor %}
+
+{% endblock %}

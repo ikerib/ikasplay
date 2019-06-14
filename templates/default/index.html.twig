@@ -1,57 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DefaultController!{% endblock %}
+{% block title %}IkasPlay{% endblock %}
 
-{% block main %}
-
-    {% for q in questions %}
-        <section class="jumbotron text-center">
-            <div class="container">
-                <h2>{{ q }}</h2>
-                <ol type="A" class="text-left">
-                    {% for a in q.answers %}
-                        <li >
-                            <a href="#" class="erantzuna" data-balioa="{{ a.correct }}">{{ a.correct }}-{{ a }}</a>
-                        </li>
-                    {% endfor %}
-                </ol>
+{% block main_body %}
+<div class="container h-100">
+    <div class="row align-items-center h-100">
+        <div class="col-6 mx-auto">
+            <div class="jumbotron text-center">
+                <a href="{{ path('quizz_index') }}">JARRAITU</a>
             </div>
-        </section>
-
-        <hr>
-
-        <div class="row">
-            <div class="col-sm">&nbsp;</div>
-            <div class="col-sm" id="divPagination" style="display: none">
-                {{ knp_pagination_render(questions, null, {}, {
-                    'position': 'right',
-                    'size': 'large',
-                    'rounded': true,
-                }) }}
-            </div>
-            <div class="col-sm">&nbsp;</div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm">
-
-            </div>
-            <div class="col-sm">
-
-            </div>
-            <div class="col-sm">
-
+            <div class="jumbotron text-center">
+                <a href="{{ path('quizz_new') }}">HASI</a>
             </div>
         </div>
-
-        <section class="text-center" id="divEmaitza">
-            <div id="divZuzena" style="display: none">
-                <span class="emoZuzena" style='font-size:100px;'>&#128526;</span>
-            </div>
-            <div id="divOkerra" style="display: none">
-                <span class="emoOkerra" style='font-size:100px;'>&#128534;</span>
-            </div>
-        </section>
-    {% endfor %}
-
+    </div>
+</div>
 {% endblock %}
