@@ -12,7 +12,7 @@
                 <ol type="A" class="text-left">
                     {% for a in quizz.question.answers %}
                         <li >
-                            <a href="#" class="erantzuna" data-question="{{ a.question.id  }}" data-id="{{ quizz.id }}" data-balioa="{{ a.correct }}">{{ quizz.id }}/{{ a.correct }}-{{ a }}</a>
+                            <a href="#" class="erantzuna" data-question="{{ a.question.id  }}" data-id="{{ quizz.id }}" data-balioa="{{ a.correct }}">{{ a }}</a>
                         </li>
                     {% endfor %}
                 </ol>
