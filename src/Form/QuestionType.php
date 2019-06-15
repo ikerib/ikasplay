@@ -26,6 +26,7 @@ class QuestionType extends AbstractType
                 'by_reference' => false,
                 'attr' => [
                     'class' => 'collectionClass',
+                    'autcomplete' => 'off'
                 ]
             ])
         ;
