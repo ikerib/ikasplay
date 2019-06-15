@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\Question;
 use App\Entity\Quizz;
 use App\Entity\QuizzDet;
+use DateTime;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,8 +40,8 @@ class DefaultController extends AbstractController
      * @param Request $request
      *
      * @return Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function newQuizz(Request $request): Response
     {
@@ -53,7 +56,7 @@ class DefaultController extends AbstractController
 
         $quizz = new Quizz();
         $quizz->setName('Quizz');
-        $quizz->setCreated(new \DateTime());
+        $quizz->setCreated(new DateTime());
         foreach ($allQuestions as $question) {
             /** @var QuizzDet $qd */
             $qd = new QuizzDet();

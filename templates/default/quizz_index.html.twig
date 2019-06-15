@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DefaultController!{% endblock %}
+{% block title %}:: IkasPlay ::{% endblock %}
 
 {% block main %}
 
     {% for quizz in quizzes %}
+        <div class="row">&nbsp;</div>
         <div class="row">
             <div class="col-sm">&nbsp;</div>
-            <div class="col-sm" id="divPagination" style="display: none">
+            <div class="col-sm" id="divPagination">
                 {{ knp_pagination_render(quizzes, null, {}, {
                     'position': 'right',
                     'size': 'large',
@@ -16,9 +17,9 @@
             </div>
             <div class="col-sm">&nbsp;</div>
         </div>
-        <section class="jumbotron text-center">
+        <section class="jumbotron">
             <div class="container">
-                <h2>{{ quizz.question.name }}</h2>
+                <h2>{{ quizz.question.name | capitalize}}</h2>
                 <ol type="A" class="text-left">
                     {% for a in quizz.question.answers %}
                         <li >

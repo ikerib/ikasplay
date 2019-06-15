@@ -24,19 +24,21 @@ $(".erantzuna").on("click", function () {
     $(".erantzuna").each(function (  ) {
         const $bal = $(this).data("balioa");
         if ( $bal !== 1 ) {
+            $(this).contents().unwrap().wrap('<p class="strike">');
             $(this).addClass("strike");
-            $(this).contents().unwrap();
         } else {
             $(this).addClass('zuzena_azpimarratu')
         }
-        if ( selbal === $bal ) {
+        if ( selbal === 1 ) {
             zuzena = 1;
         }
     });
 
+    const $url = "/api/quizzdet/" + miid;
+    const $url2 = "/result/" + miid;
     $.ajax({
-        url: "/result/" + miid,
-        type: "GET",
+        url: $url,
+        type: "PUT",
         data: "result=" + zuzena,
         success: function ( data ) {
             console.log(data);
