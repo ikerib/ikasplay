@@ -5,7 +5,17 @@
 {% block main %}
 
     {% for quizz in quizzes %}
-
+        <div class="row">
+            <div class="col-sm">&nbsp;</div>
+            <div class="col-sm" id="divPagination" style="display: none">
+                {{ knp_pagination_render(quizzes, null, {}, {
+                    'position': 'right',
+                    'size': 'large',
+                    'rounded': true,
+                }) }}
+            </div>
+            <div class="col-sm">&nbsp;</div>
+        </div>
         <section class="jumbotron text-center">
             <div class="container">
                 <h2>{{ quizz.question.name }}</h2>
@@ -21,17 +31,7 @@
 
         <hr>
 
-        <div class="row">
-            <div class="col-sm">&nbsp;</div>
-            <div class="col-sm" id="divPagination" style="display: none">
-                {{ knp_pagination_render(quizzes, null, {}, {
-                    'position': 'right',
-                    'size': 'large',
-                    'rounded': true,
-                }) }}
-            </div>
-            <div class="col-sm">&nbsp;</div>
-        </div>
+
 
         <div class="row">
             <div class="col-sm">
