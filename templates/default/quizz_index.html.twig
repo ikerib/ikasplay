@@ -30,7 +30,7 @@
 
     <section class="jumbotron">
         <div class="container">
-            <h2>{{ quizz.id ~ ' - '~quizz.question.name | capitalize}}</h2>
+            <h2>{{ quizz.question.name | capitalize}}</h2>
             <ol type="A" class="text-left">
                 {% for a in quizz.question.answers %}
                     <li >
