@@ -33,9 +33,14 @@ class QuizzDetRepository extends ServiceEntityRepository {
     public function findFirst($result)
     {
         /** @var QueryBuilder $qb */
-        $qb = $this->createQueryBuilder('q')
-                   ->andWhere('q.result=:result')
-                   ->setParameter('result', $result);
+        $qb = $this->createQueryBuilder('q');
+        if ($result === null)
+        {
+            $qb->andWhere('q.result is null');
+        } else
+        {
+            $qb->andWhere('q.result=:result')->setParameter('result', $result);
+        }
 
         return $qb->getQuery()->getResult();
     }
@@ -44,8 +49,17 @@ class QuizzDetRepository extends ServiceEntityRepository {
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('q')
-                   ->andWhere('q.result=:result')->setParameter('result', $result)
-                   ->andWhere('q.id > :id')->setParameter('id', $id);
+                   ->andWhere('q.id > :id')->setParameter('id', $id)
+                   ->orderBy('q.id', 'ASC');
+
+
+        if ($result === false)
+        {
+            $qb->andWhere('q.result is null');
+        } else
+        {
+            $qb->andWhere('q.result=:result')->setParameter('result', $result);
+        }
 
         return $qb->getQuery()->getResult();
     }
@@ -55,8 +69,16 @@ class QuizzDetRepository extends ServiceEntityRepository {
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('q')
-                   ->andWhere('q.result=:result')->setParameter('result', $result)
-                   ->andWhere('q.id < :id')->setParameter('id', $id);
+                   ->andWhere('q.id < :id')->setParameter('id', $id)
+                   ->orderBy('q.id', 'DESC');
+
+        if ($result === false)
+        {
+            $qb->andWhere('q.result is null');
+        } else
+        {
+            $qb->andWhere('q.result=:result')->setParameter('result', $result);
+        }
 
         return $qb->getQuery()->getResult();
     }
