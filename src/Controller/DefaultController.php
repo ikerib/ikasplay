@@ -7,9 +7,9 @@ use App\Entity\Quizz;
 use App\Entity\QuizzDet;
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,18 +17,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-
-class DefaultController extends AbstractController
-{
+class DefaultController extends AbstractController {
 
     /**
      * @Route("/", name="default")
      * @param Request            $request
-     * @param PaginatorInterface $paginator
      *
      * @return Response
      */
-    public function index(Request $request, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
 
         return $this->render('default/index.html.twig');
@@ -46,10 +43,11 @@ class DefaultController extends AbstractController
     public function newQuizz(Request $request): Response
     {
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em           = $this->getDoctrine()->getManager();
         $allQuestions = $em->getRepository(Question::class)->findAll();
-        $allQuizz = $em->getRepository(Quizz::class)->findAll();
-        foreach ($allQuizz as $quizz) {
+        $allQuizz     = $em->getRepository(Quizz::class)->findAll();
+        foreach ($allQuizz as $quizz)
+        {
             $em->remove($quizz);
         }
         $em->flush();
@@ -57,7 +55,8 @@ class DefaultController extends AbstractController
         $quizz = new Quizz();
         $quizz->setName('Quizz');
         $quizz->setCreated(new DateTime());
-        foreach ($allQuestions as $question) {
+        foreach ($allQuestions as $question)
+        {
             /** @var QuizzDet $qd */
             $qd = new QuizzDet();
             $qd->setQuizz($quizz);
@@ -72,48 +71,101 @@ class DefaultController extends AbstractController
     }
 
 
-
     /**
      * @Route("/quizz", name="quizz_index")
-     * @param Request            $request
-     * @param PaginatorInterface $paginator
+     *
+     * @param Request $request
      *
      * @return Response
+     * @throws EntityNotFoundException
      */
-    public function quizz(Request $request, PaginatorInterface $paginator): Response
+    public function quizz(Request $request): Response
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $allQuizz = $em->getRepository(QuizzDet::class)->findAllUnanswered();
+        $direction  = $request->query->get('direction');
+        $miid       = $request->query->get('miid');
+        $isLehena   = false;
+        $isAzkena   = false;
+        $isFirst    = false;
+        $isLast     = false;
 
-        $quizzes = $paginator->paginate(
-            $allQuizz,
-            $request->query->getInt('page',1),
-            $request->query->getInt('limit',1)
+        if ($direction === null) {
+            $allQuizz = $em->getRepository(QuizzDet::class)->findFirstUnanswered();
+            $isLehena = true;
+            $isAzkena = count($allQuizz) > 1;
+        } elseif ($direction==='next') {
+            $allQuizz = $this->quizznext($miid);
+            $isLehena = false;
+            $isAzkena = count($allQuizz) === 1;
+        } else {
+            $allQuizz = $this->quizzprevious($miid);
+            $isLehena = count($allQuizz)===1;
+            $isAzkena = false;
+        }
+
+
+        if (!$allQuizz)
+        {
+            throw new EntityNotFoundException('No quizz found');
+        }
+        $isFirst = $isLehena === true;
+        $isLast  = $isAzkena === true;
+
+        return $this->render(
+            'default/quizz_index.html.twig',
+            [
+                'quizz'   => $allQuizz[ 0 ],
+                'isFirst' => $isFirst,
+                'isLast'  => $isLast,
+            ]
         );
-
-
-        return $this->render('default/quizz_index.html.twig', [
-            'quizzes' => $quizzes,
-        ]);
     }
 
     /**
-     * @Route("/result/{id}", name="quizz_result")
-     * @param Request $request
-     * @param         $id
+     * @Route("/quizz/next/{id}", name="quizz_next")
+     * @param $id
      *
-     * @return JsonResponse
+     * @return mixed
+     * @throws EntityNotFoundException
      */
-    public function quizzresult(Request $request, $id) {
+    public function quizznext($id)
+    {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $quizz = $em->getRepository(QuizzDet::class)->find($id);
-        $result = $request->get('result');
-        $quizz->setResult($result);
+        $allQuizz = $em->getRepository(QuizzDet::class)->findNextUnanswered($id);
 
-        return new JsonResponse($quizz, 200);
+        if (!$allQuizz)
+        {
+            throw new EntityNotFoundException('No quizz found');
+        }
+
+        return $allQuizz;
     }
+
+    /**
+     * @Route("/quizz/previous/{id}", name="quizz_next")
+     * @param $id
+     *
+     * @return mixed
+     * @throws EntityNotFoundException
+     */
+    public function quizzprevious($id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $allQuizz = $em->getRepository(QuizzDet::class)->findPreviousUnanswered($id);
+
+        if (!$allQuizz)
+        {
+            throw new EntityNotFoundException('No quizz found');
+        }
+
+        return $allQuizz;
+    }
+
+
 }

@@ -26,35 +26,37 @@ class QuizzDetRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('q')
                     ->andWhere('q.result is null')
                     ->getQuery()
-                    ->getResult();
+                    ->getResult()
+
+            ;
     }
 
-    // /**
-    //  * @return QuizzDet[] Returns an array of QuizzDet objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findFirstUnanswered()
     {
         return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+                    ->andWhere('q.result is null')
+                    ->getQuery()->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?QuizzDet
+    public function findNextUnanswered($id)
     {
         return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+                    ->andWhere('q.result is null')
+                    ->andWhere('q.id > :id')
+                    ->setParameter('id',$id)
+                    ->orderBy('q.id', 'ASC')
+                    ->getQuery()->getResult();
     }
-    */
+
+    public function findPreviousUnanswered($id)
+    {
+        return $this->createQueryBuilder('q')
+                    ->andWhere('q.result is null')
+                    ->andWhere('q.id < :id')
+                    ->setParameter('id',$id)
+                    ->orderBy('q.id', 'DESC')
+                    ->getQuery()->getResult();
+    }
+
+
 }

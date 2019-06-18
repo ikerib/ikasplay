@@ -34,7 +34,7 @@ class ApiController extends AbstractFOSRestController
      *
      * @return JsonResponse
      */
-    public function putAction(Request $request, string $id)
+    public function putAction(Request $request, string $id): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $quizzdet = $em->getRepository(QuizzDet::class)->find($id);
@@ -44,10 +44,6 @@ class ApiController extends AbstractFOSRestController
         $em->persist($quizzdet);
 
         $em->flush();
-        $view = $this->view($quizzdet, 200);
-//        return new JsonResponse('Record saved', 200);
-//        return new View('Record saved',200);
-//        return $this->handleView($view);
-        return new JsonResponse("OK");
+        return new JsonResponse('OK');
     }
 }

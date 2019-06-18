@@ -4,35 +4,43 @@
 
 {% block main %}
 
-    {% for quizz in quizzes %}
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            <div class="col-sm">&nbsp;</div>
-            <div class="col-sm" id="divPagination">
-                {{ knp_pagination_render(quizzes, null, {}, {
-                    'position': 'right',
-                    'size': 'large',
-                    'rounded': true,
-                }) }}
-            </div>
-            <div class="col-sm">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-sm">&nbsp;</div>
+        <div class="col-sm" id="divPagination">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-lg justify-content-center">
+                    <li class="page-item  {% if isFirst %} disabled {% endif %}">
+                        <a class="page-link" href="{{ path('quizz_index', { 'direction': 'previous', 'miid' : quizz.id }) }}">Aurrekoa</a>
+                    </li>
+                    <li class="page-item text-center">
+                        <div class="emoZuzena" style='font-size:37px;display: none'>&#128526;</div>
+                        <div class="emoOkerra" style='font-size:37px;display: none'>&#128534;</div>
+                    </li>
+                    <li class="page-item {% if isLast %} disabled {% endif %}">
+                        <a class="page-link" href="{{ path('quizz_index', { 'direction': 'next', 'miid' : quizz.id }) }}">Hurrengoa</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <section class="jumbotron">
-            <div class="container">
-                <h2>{{ quizz.question.name | capitalize}}</h2>
-                <ol type="A" class="text-left">
-                    {% for a in quizz.question.answers %}
-                        <li >
-                            <a href="#" class="erantzuna" data-question="{{ a.question.id  }}" data-id="{{ quizz.id }}" data-balioa="{{ a.correct }}">{{ a }}</a>
-                        </li>
-                    {% endfor %}
-                </ol>
-            </div>
-        </section>
-
-        <hr>
+        <div class="col-sm">&nbsp;</div>
+    </div>
 
 
-    {% endfor %}
+
+    <section class="jumbotron">
+        <div class="container">
+            <h2>{{ quizz.id ~ ' ' ~ quizz.question.name | capitalize}}</h2>
+            <ol type="A" class="text-left">
+                {% for a in quizz.question.answers %}
+                    <li >
+                        <a href="#" class="erantzuna" data-question="{{ a.question.id  }}" data-id="{{ quizz.id }}" data-balioa="{{ a.correct }}">{{ a }}</a>
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+    </section>
+
+
 
 {% endblock %}
