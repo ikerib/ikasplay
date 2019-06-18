@@ -11,14 +11,14 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination pagination-lg justify-content-center">
                     <li class="page-item  {% if isFirst %} disabled {% endif %}">
-                        <a class="page-link" href="{{ path('quizz_index', { 'direction': 'previous', 'miid' : quizz.id }) }}">Aurrekoa</a>
+                        <a class="page-link" href="{{ path('quizz_index', { 'direction': 'previous', 'miid' : quizz.id, 'repaso': repaso }) }}">Aurrekoa</a>
                     </li>
                     <li class="page-item text-center">
                         <div class="emoZuzena" style='font-size:37px;display: none'>&#128526;</div>
                         <div class="emoOkerra" style='font-size:37px;display: none'>&#128534;</div>
                     </li>
                     <li class="page-item {% if isLast %} disabled {% endif %}">
-                        <a class="page-link" href="{{ path('quizz_index', { 'direction': 'next', 'miid' : quizz.id }) }}">Hurrengoa</a>
+                        <a class="page-link" href="{{ path('quizz_index', { 'direction': 'next', 'miid' : quizz.id, 'repaso': repaso }) }}">Hurrengoa</a>
                     </li>
                 </ul>
             </nav>

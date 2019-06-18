@@ -124,6 +124,7 @@ class DefaultController extends AbstractController {
                 'quizz'   => $allQuizz[ 0 ],
                 'isFirst' => $isFirst,
                 'isLast'  => $isLast,
+                'repaso'  => $repaso
             ]
         );
     }

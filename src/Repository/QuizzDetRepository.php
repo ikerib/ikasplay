@@ -39,7 +39,7 @@ class QuizzDetRepository extends ServiceEntityRepository {
             $qb->andWhere('q.result is null');
         } else
         {
-            $qb->andWhere('q.result=:result')->setParameter('result', $result);
+            $qb->andWhere('q.result=:result')->setParameter('result', 0);
         }
 
         return $qb->getQuery()->getResult();
@@ -58,7 +58,7 @@ class QuizzDetRepository extends ServiceEntityRepository {
             $qb->andWhere('q.result is null');
         } else
         {
-            $qb->andWhere('q.result=:result')->setParameter('result', $result);
+            $qb->andWhere('q.result=:result')->setParameter('result', 0);
         }
 
         return $qb->getQuery()->getResult();
