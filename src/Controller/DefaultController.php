@@ -118,13 +118,22 @@ class DefaultController extends AbstractController {
         $isFirst = $isLehena === true;
         $isLast  = $isAzkena === true;
 
+        $quizzTotal = $em->getRepository(QuizzDet::class)->getAllQuizCount();
+        $quizzCorrect = $em->getRepository(QuizzDet::class)->getCorrectAnswersCount();
+        $quizzInCorrect = $em->getRepository(QuizzDet::class)->getIncorrectAnswersCount();
+        $quizzUnAnswered = $em->getRepository(QuizzDet::class)->getUnansweredCount();
+
         return $this->render(
             'default/quizz_index.html.twig',
             [
                 'quizz'   => $allQuizz[ 0 ],
                 'isFirst' => $isFirst,
                 'isLast'  => $isLast,
-                'repaso'  => $repaso
+                'repaso'  => $repaso,
+                'quizzTotal'    => $quizzTotal,
+                'quizzCorrect' => $quizzCorrect,
+                'quizzInCorrect' => $quizzInCorrect,
+                'quizzUnAnswered' => $quizzUnAnswered
             ]
         );
     }

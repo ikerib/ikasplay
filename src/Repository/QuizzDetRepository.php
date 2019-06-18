@@ -83,5 +83,45 @@ class QuizzDetRepository extends ServiceEntityRepository {
         return $qb->getQuery()->getResult();
     }
 
+    public function getAllQuizCount()
+    {
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('q')
+                   ->select('count(q.id) as zenbat')
+                   ;
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getCorrectAnswersCount()
+    {
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('q')
+                    ->select('count(q.id) as zenbat')
+                   ->andWhere('q.result = 1');
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getIncorrectAnswersCount()
+    {
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('q')
+                    ->select('count(q.id) as zenbat')
+                   ->andWhere('q.result = 0');
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getUnansweredCount()
+    {
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('q')
+                    ->select('count(q.id) as zenbat')
+                   ->andWhere('q.result is null');
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
 
 }
