@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\QuizzDet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -12,8 +13,8 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method QuizzDet[]    findAll()
  * @method QuizzDet[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class QuizzDetRepository extends ServiceEntityRepository
-{
+class QuizzDetRepository extends ServiceEntityRepository {
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, QuizzDet::class);
@@ -26,36 +27,38 @@ class QuizzDetRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('q')
                     ->andWhere('q.result is null')
                     ->getQuery()
-                    ->getResult()
-
-            ;
+                    ->getResult();
     }
 
-    public function findFirstUnanswered()
+    public function findFirst($result)
     {
-        return $this->createQueryBuilder('q')
-                    ->andWhere('q.result is null')
-                    ->getQuery()->getResult();
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('q')
+                   ->andWhere('q.result=:result')
+                   ->setParameter('result', $result);
+
+        return $qb->getQuery()->getResult();
     }
 
-    public function findNextUnanswered($id)
+    public function findNext($id, $result)
     {
-        return $this->createQueryBuilder('q')
-                    ->andWhere('q.result is null')
-                    ->andWhere('q.id > :id')
-                    ->setParameter('id',$id)
-                    ->orderBy('q.id', 'ASC')
-                    ->getQuery()->getResult();
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('q')
+                   ->andWhere('q.result=:result')->setParameter('result', $result)
+                   ->andWhere('q.id > :id')->setParameter('id', $id);
+
+        return $qb->getQuery()->getResult();
     }
 
-    public function findPreviousUnanswered($id)
+
+    public function findPrevious($id, $result)
     {
-        return $this->createQueryBuilder('q')
-                    ->andWhere('q.result is null')
-                    ->andWhere('q.id < :id')
-                    ->setParameter('id',$id)
-                    ->orderBy('q.id', 'DESC')
-                    ->getQuery()->getResult();
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('q')
+                   ->andWhere('q.result=:result')->setParameter('result', $result)
+                   ->andWhere('q.id < :id')->setParameter('id', $id);
+
+        return $qb->getQuery()->getResult();
     }
 
 

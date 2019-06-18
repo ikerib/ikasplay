@@ -7,10 +7,13 @@
     <div class="row align-items-center h-100">
         <div class="col-6 mx-auto">
             <div class="jumbotron text-center">
-                <a href="{{ path('quizz_index') }}">JARRAITU</a>
+                <a class="btn btn-lg btn-primary" href="{{ path('quizz_index') }}">JARRAITU</a>
             </div>
             <div class="jumbotron text-center">
-                <a href="{{ path('quizz_new') }}">HASI</a>
+                <a class="btn btn-lg btn-primary" href="{{ path('quizz_new') }}">HASI</a>
+            </div>
+            <div class="jumbotron text-center">
+                <a class="btn btn-lg btn-primary" href="{{ path('quizz_index', { 'repaso': 1}) }}">REPASO</a>
             </div>
         </div>
     </div>

@@ -86,21 +86,26 @@ class DefaultController extends AbstractController {
 
         $direction  = $request->query->get('direction');
         $miid       = $request->query->get('miid');
+        $repaso     = $request->query->get('repaso') === '1';
         $isLehena   = false;
         $isAzkena   = false;
         $isFirst    = false;
         $isLast     = false;
 
         if ($direction === null) {
-            $allQuizz = $em->getRepository(QuizzDet::class)->findFirstUnanswered();
+            if (!$repaso) {
+                $allQuizz = $em->getRepository(QuizzDet::class)->findFirst(null);
+            } else {
+                $allQuizz = $em->getRepository(QuizzDet::class)->findFirst(0);
+            }
             $isLehena = true;
-            $isAzkena = count($allQuizz) > 1;
+            $isAzkena = count($allQuizz) === 1;
         } elseif ($direction==='next') {
-            $allQuizz = $this->quizznext($miid);
+            $allQuizz = $this->quizznext($miid, $repaso);
             $isLehena = false;
             $isAzkena = count($allQuizz) === 1;
         } else {
-            $allQuizz = $this->quizzprevious($miid);
+            $allQuizz = $this->quizzprevious($miid, $repaso);
             $isLehena = count($allQuizz)===1;
             $isAzkena = false;
         }
@@ -124,18 +129,18 @@ class DefaultController extends AbstractController {
     }
 
     /**
-     * @Route("/quizz/next/{id}", name="quizz_next")
      * @param $id
+     * @param $repaso
      *
      * @return mixed
      * @throws EntityNotFoundException
      */
-    public function quizznext($id)
+    public function quizznext($id, $repaso)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $allQuizz = $em->getRepository(QuizzDet::class)->findNextUnanswered($id);
+        $allQuizz = $em->getRepository(QuizzDet::class)->findNext($id,$repaso);
 
         if (!$allQuizz)
         {
@@ -146,18 +151,19 @@ class DefaultController extends AbstractController {
     }
 
     /**
-     * @Route("/quizz/previous/{id}", name="quizz_next")
+     *
      * @param $id
+     * @param $repaso
      *
      * @return mixed
      * @throws EntityNotFoundException
      */
-    public function quizzprevious($id)
+    public function quizzprevious($id, $repaso)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $allQuizz = $em->getRepository(QuizzDet::class)->findPreviousUnanswered($id);
+        $allQuizz = $em->getRepository(QuizzDet::class)->findPrevious($id, $repaso);
 
         if (!$allQuizz)
         {
