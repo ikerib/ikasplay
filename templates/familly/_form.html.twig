@@ -1,0 +1,22 @@
+{% form_theme form with ['question-theme.html.twig','jquery.collection.html.twig'] %}
+{{ form_start(form) }}
+
+<ul class="list-inline">
+    <li class="list-inline-item">
+        <button class="btn btn-primary">{{ button_label|default('Gorde') }}</button>
+    </li>
+
+    <li class="list-inline-item">
+        <a class="btn btn-primary" href="{{ path('familly_index') }}">Itzuli zerrendara</a>
+    </li>
+</ul>
+
+<hr>
+
+
+{{ form_row(form.name) }}
+
+    {{ form_rest(form) }}
+
+{{ form_end(form) }}
+

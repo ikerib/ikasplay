@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\FamillyRepository")
  */
-class Question
+class Familly
 {
     /**
      * @ORM\Id()
@@ -23,27 +23,19 @@ class Question
      */
     private $name;
 
+
     /**********************************************************************************************************************************************/
     /**********************************************************************************************************************************************/
     /**********************************************************************************************************************************************/
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="familly", cascade={"persist", "remove"})
      */
-    private $answers;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Familly", inversedBy="quizzes", cascade={"persist"})
-     */
-    private $familly;
-
-    public function __toString() {
-        return $this->name;
-    }
+    private $quizzes;
 
     public function __construct()
     {
-        $this->answers = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
     }
 
     /**********************************************************************************************************************************************/
@@ -69,44 +61,32 @@ class Question
     }
 
     /**
-     * @return Collection|Answer[]
+     * @return Collection|Question[]
      */
-    public function getAnswers(): Collection
+    public function getQuizzes(): Collection
     {
-        return $this->answers;
+        return $this->quizzes;
     }
 
-    public function addAnswer(Answer $answer): self
+    public function addQuiz(Question $quiz): self
     {
-        if (!$this->answers->contains($answer)) {
-            $this->answers[] = $answer;
-            $answer->setQuestion($this);
+        if (!$this->quizzes->contains($quiz)) {
+            $this->quizzes[] = $quiz;
+            $quiz->setFamilly($this);
         }
 
         return $this;
     }
 
-    public function removeAnswer(Answer $answer): self
+    public function removeQuiz(Question $quiz): self
     {
-        if ($this->answers->contains($answer)) {
-            $this->answers->removeElement($answer);
+        if ($this->quizzes->contains($quiz)) {
+            $this->quizzes->removeElement($quiz);
             // set the owning side to null (unless already changed)
-            if ($answer->getQuestion() === $this) {
-                $answer->setQuestion(null);
+            if ($quiz->getFamilly() === $this) {
+                $quiz->setFamilly(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getFamilly(): ?Familly
-    {
-        return $this->familly;
-    }
-
-    public function setFamilly(?Familly $familly): self
-    {
-        $this->familly = $familly;
 
         return $this;
     }
