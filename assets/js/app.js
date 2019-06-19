@@ -59,3 +59,21 @@ $(".erantzuna").on("click", function () {
 
 });
 
+
+$("#quiestionid").on("click", function () {
+    const $miid = $(this).data("id");
+    const $url = "/api/question/" + $miid + "/problem";
+    let that = this;
+    $.ajax({
+        url: $url,
+        type: "PUT",
+        data: "problem=1",
+        success: function ( data ) {
+            console.log(data);
+            $(that).addClass("incorrect_quizz");
+        },
+        error: function ( err ) {
+            console.log(err);
+        }
+    });
+});

@@ -23,6 +23,11 @@ class Question
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $problem;
+
     /**********************************************************************************************************************************************/
     /**********************************************************************************************************************************************/
     /**********************************************************************************************************************************************/
@@ -107,6 +112,18 @@ class Question
     public function setFamilly(?Familly $familly): self
     {
         $this->familly = $familly;
+
+        return $this;
+    }
+
+    public function getProblem(): ?bool
+    {
+        return $this->problem;
+    }
+
+    public function setProblem(?bool $problem): self
+    {
+        $this->problem = $problem;
 
         return $this;
     }

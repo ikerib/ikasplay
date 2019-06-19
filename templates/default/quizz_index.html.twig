@@ -42,7 +42,11 @@
     </section>
 
     <div class="row">
-        <div class="col-sm"><small>{{ 'Quizz id:' ~ quizz.id }}</small></div>
+        <div class="col-sm">
+            <a href="#" id="quiestionid" data-id="{{ quizz.question.id }}" class="{% if quizz.question.problem == 1 %}incorrect_quizz{% endif %}">
+                <small>{{ 'Quizz id:' ~ quizz.id }}</small>
+            </a>
+        </div>
         <div class="col-sm"><small>{{ 'Galderak:' ~ quizzTotal }}</small></div>
         <div class="col-sm"><small>{{ 'Zuzen:' ~ quizzCorrect }}</small></div>
         <div class="col-sm"><small>{{ 'Oker:' ~ quizzInCorrect }}</small></div>

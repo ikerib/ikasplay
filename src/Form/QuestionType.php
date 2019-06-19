@@ -29,6 +29,7 @@ class QuestionType extends AbstractType
                     'autcomplete' => 'off'
                 ]
             ])
+            ->add('problem')
         ;
     }
 

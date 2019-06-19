@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Question;
 use App\Entity\QuizzDet;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -42,6 +43,26 @@ class ApiController extends AbstractFOSRestController
         $result = $request->get('result');
         $quizzdet->setResult($result);
         $em->persist($quizzdet);
+
+        $em->flush();
+        return new JsonResponse('OK');
+    }
+
+    /**
+     * @Rest\Put("/question/{id}/problem", name="put_problem_question", methods={"PUT"}, requirements={"id"="\d+"})
+     * @param Request $request
+     * @param string  $id
+     *
+     * @return JsonResponse
+     */
+    public function putQuestionProblemAction(Request $request, string $id): JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $question = $em->getRepository(Question::class)->find($id);
+
+        $problem = $request->get('problem');
+        $question->setProblem($problem);
+        $em->persist($question);
 
         $em->flush();
         return new JsonResponse('OK');
