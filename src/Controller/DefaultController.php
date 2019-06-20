@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Familly;
 use App\Entity\Question;
 use App\Entity\Quizz;
 use App\Entity\QuizzDet;
@@ -12,6 +13,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,18 +37,60 @@ class DefaultController extends AbstractController {
     /**
      * @Route("/quizz/familly", name="quizz_familly")
      */
-    public function famillyQuizz() {
+    public function famillyQuizz(): Response
+    {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $familiak = $em->getRepository(Familly::class)->findAll();
+        $famillies = $em->getRepository(Familly::class)->findAll();
 
         return $this->render(
             'default/quizz_familly_index.html.twig',
             [
-                'familiak' => $familiak,
+                'famillies' => $famillies,
 
             ]
         );
+    }
+
+    /**
+     * @Route("/quizz/byfamilly/new", name="quizz_by_familly_new")
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     * @throws ORMException
+     */
+    public function quizzByFamillyNew(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $selection = $request->get('chkSelecion');
+
+        $questions = $em->getRepository(Question::class)->findAllByFamilly($selection);
+        if (!$questions) {
+            return $this->render('default/error.html.twig');
+        }
+
+        $allQuizz     = $em->getRepository(Quizz::class)->findAll();
+        foreach ($allQuizz as $quizz)
+        {
+            $em->remove($quizz);
+        }
+        $em->flush();
+
+        $quizz = new Quizz();
+        $quizz->setName('Quizz by familly');
+        $quizz->setCreated(new DateTime());
+        foreach ($questions as $question)
+        {
+            /** @var QuizzDet $qd */
+            $qd = new QuizzDet();
+            $qd->setQuizz($quizz);
+            $qd->setQuestion($question);
+            $em->persist($qd);
+        }
+        $em->flush();
+        return $this->redirectToRoute('quizz_index');
     }
 
     /**

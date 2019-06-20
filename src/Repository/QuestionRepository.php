@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Question;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Question|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +19,17 @@ class QuestionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Question::class);
     }
+
+    public function findAllByFamilly($ids) {
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('q')
+            ->innerJoin('q.familly','familly')
+                   ->andWhere('familly.id in (:ids)')->setParameter('ids', $ids);
+
+
+        return $qb->getQuery()->getResult();
+    }
+
 
     // /**
     //  * @return Question[] Returns an array of Question objects
