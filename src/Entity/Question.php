@@ -28,6 +28,11 @@ class Question
      */
     private $problem;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $fails;
+
     /**********************************************************************************************************************************************/
     /**********************************************************************************************************************************************/
     /**********************************************************************************************************************************************/
@@ -124,6 +129,18 @@ class Question
     public function setProblem(?bool $problem): self
     {
         $this->problem = $problem;
+
+        return $this;
+    }
+
+    public function getFails(): ?int
+    {
+        return $this->fails;
+    }
+
+    public function setFails(?int $fails): self
+    {
+        $this->fails = $fails;
 
         return $this;
     }

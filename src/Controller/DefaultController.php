@@ -31,6 +31,24 @@ class DefaultController extends AbstractController {
         return $this->render('default/index.html.twig');
     }
 
+
+    /**
+     * @Route("/quizz/familly", name="quizz_familly")
+     */
+    public function famillyQuizz() {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $familiak = $em->getRepository(Familly::class)->findAll();
+
+        return $this->render(
+            'default/quizz_familly_index.html.twig',
+            [
+                'familiak' => $familiak,
+
+            ]
+        );
+    }
+
     /**
      * @Route("/quizz/new", name="quizz_new")
      *

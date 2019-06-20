@@ -35,7 +35,7 @@ class ApiController extends AbstractFOSRestController
      *
      * @return JsonResponse
      */
-    public function putAction(Request $request, string $id): JsonResponse
+    public function putResultado(Request $request, string $id): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $quizzdet = $em->getRepository(QuizzDet::class)->find($id);
@@ -43,6 +43,19 @@ class ApiController extends AbstractFOSRestController
         $result = $request->get('result');
         $quizzdet->setResult($result);
         $em->persist($quizzdet);
+
+        if ($result === 0) {
+            /** @var Question $question */
+            $question = $quizzdet->getQuestion();
+            if ($question->getFails() === null) {
+                $num_fails = 0;
+            } else {
+                $num_fails = $question->getFails();
+            }
+
+            $question->setFails($num_fails + 1);
+            $em->persist($question);
+        }
 
         $em->flush();
         return new JsonResponse('OK');
