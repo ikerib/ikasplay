@@ -34,10 +34,9 @@
             <h2>{{ quizz.question.name | capitalize}}</h2>
             <ol type="A" class="text-left">
                 {% for a in quizz.question.answers %}
-                    <li >
+                    <li class="liAnswer">
                         <a href="#" class="erantzuna" data-question="{{ a.question.id  }}" data-id="{{ quizz.id }}" data-balioa="{{ a.correct }}">{{ a }}</a>
                     </li>
-                    <li>&nbsp;</li>
                 {% endfor %}
             </ol>
         </div>
