@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Answer;
 use App\Entity\Question;
+use App\Entity\QuizzDet;
 use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,8 +67,18 @@ class QuestionController extends AbstractController
      */
     public function show(Question $question): Response
     {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $quizzTotal = $em->getRepository(QuizzDet::class)->getAllQuizCount();
+        $quizzCorrect = $em->getRepository(QuizzDet::class)->getCorrectAnswersCount();
+        $quizzInCorrect = $em->getRepository(QuizzDet::class)->getIncorrectAnswersCount();
+        $quizzUnAnswered = $em->getRepository(QuizzDet::class)->getUnansweredCount();
         return $this->render('question/show.html.twig', [
             'question' => $question,
+            'quizzTotal' => $quizzTotal,
+            'quizzCorrect' => $quizzCorrect,
+            'quizzInCorrect' => $quizzInCorrect,
+            'quizzUnAnswered' => $quizzUnAnswered,
         ]);
     }
 

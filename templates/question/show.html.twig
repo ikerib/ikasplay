@@ -10,28 +10,57 @@
 
     <hr>
 
-            <section class="jumbotron text-center">
-                <div class="container">
-                    <p class="lead text-muted">{{ question.name }}</p>
-                    <ol type="A">
-                        {% for a in question.answers %}
-                            <li >
-                                <a href="#" class="erantzuna" data-balioa="{{ a.correct }}">{{ a }}</a>
-                            </li>
-                        {% endfor %}
-                    </ol>
-                </div>
-            </section>
-            <hr>
 
-            <section class="text-center" id="divEmaitza">
-                <div class="divZuzena">
-                    <span style='font-size:100px;'>&#128526;</span>
-                </div>
-                <div class="divOkerra">
-                    <span style='font-size:100px;'>&#128534;</span>
-                </div>
-            </section>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-sm">&nbsp;</div>
+            <div class="col-sm" id="divPagination">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination pagination-lg justify-content-center">
+                        <li class="page-item  disabled ">
+                            <a class="page-link" href="#">Aurrekoa</a>
+                        </li>
+                        <li class="page-item text-center">
+                            <div class="emoZuzena" style='font-size:37px;display: none'>&#128526;</div>
+                            <div class="emoOkerra" style='font-size:37px;display: none'>&#128534;</div>
+                        </li>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Hurrengoa</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-sm">&nbsp;<div class="text-center"><small>Familia: {{ question.familly.name }}</small></div></div>
+        </div>
+
+
+
+        <section class="jumbotron">
+
+            <div class="container">
+                <h2>{{ question.name | capitalize}}</h2>
+                <ol type="A" class="text-left">
+                    {% for a in question.answers %}
+                        <li class="liAnswer">
+                            <a href="#" class="erantzuna" data-question="{{ a.question.id  }}" data-id="{{ question.id }}" data-balioa="{{ a.correct }}">{{ a }}</a>
+                        </li>
+
+                    {% endfor %}
+                </ol>
+            </div>
+        </section>
+
+        <div class="row">
+            <div class="col-sm">
+                <a href="#" id="quiestionid" data-id="{{ question.id }}" class="{% if question.problem == 1 %}incorrect_quizz{% endif %}">
+                    <small>{{ 'Quizz id:' ~ question.id }}</small>
+                </a>
+            </div>
+            <div class="col-sm"><small>{{ 'Galderak:' ~ quizzTotal }}</small></div>
+            <div class="col-sm"><small>{{ 'Zuzen:' ~ quizzCorrect }}</small></div>
+            <div class="col-sm"><small>{{ 'Oker:' ~ quizzInCorrect }}</small></div>
+            <div class="col-sm"><small>{{ 'Falta dira:' ~ quizzUnAnswered }}</small></div>
+        </div>
 
 
 
