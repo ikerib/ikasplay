@@ -44,6 +44,7 @@ class Question
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Familly", inversedBy="quizzes", cascade={"persist"})
+     * @ORM\OrderBy( { "id" = "DESC" } )
      */
     private $familly;
 

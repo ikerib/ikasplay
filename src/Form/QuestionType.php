@@ -14,6 +14,7 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('familly')
             ->add('name')
             ->add('answers', CollectionType::class, [
                 'entry_type' => AnswerType::class,
