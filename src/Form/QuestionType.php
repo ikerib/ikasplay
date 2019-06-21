@@ -3,7 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Answer;
+use App\Entity\Familly;
 use App\Entity\Question;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,7 +17,14 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('familly')
+            ->add('familly', EntityType::class, [
+                'class' => Familly::class,
+                'query_builder' => static function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                              ->orderBy('u.id', 'DESC');
+                },
+                'required' => true
+            ])
             ->add('name')
             ->add('answers', CollectionType::class, [
                 'entry_type' => AnswerType::class,
