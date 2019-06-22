@@ -1,6 +1,11 @@
 
 $primary: darken(#428bca, 20%);
+$font-size-base:  0.8rem !default;
 @import "~bootstrap/scss/bootstrap";
+
+.body {
+  font-size: 0.8rem !important;
+}
 
 .jumbotron {
   padding-top: 3rem;
